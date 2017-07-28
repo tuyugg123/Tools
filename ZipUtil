@@ -1,0 +1,38 @@
+package pers.tuyu.testdemo.zip;
+
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.taskdefs.Zip;
+import org.apache.tools.ant.types.FileSet;
+import org.junit.Test;
+
+
+
+public class ZipDemo {
+	
+	@Test
+	public void test0x1() throws FileNotFoundException{
+		File outPutDir = new File("D:/迅雷下载");//输出zip包的目录
+		if(!outPutDir.exists()){
+			outPutDir.mkdirs();
+		}
+		/*需要被压缩的文件夹*/
+		File fileDir = new File("D:/迅雷下载/files");
+		if(!fileDir.exists()){
+			System.err.println("文件夹不存在！"); 
+		}else{
+			Project pro = new  Project();
+			Zip zip = new Zip();
+			zip.setProject(pro);
+			zip.setDestFile(new File("D:/迅雷下载/files.zip"));
+			FileSet fileSet = new FileSet();
+			fileSet.setProject(pro);
+			fileSet.setDir(fileDir);
+			zip.addFileset(fileSet);
+			zip.execute();
+		}
+	} 
+}
